@@ -2,6 +2,7 @@ package org.example.newsfeed.domain.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.newsfeed.common.config.JwtUtil;
+import org.example.newsfeed.common.encoder.PasswordEncoder;
 import org.example.newsfeed.domain.auth.dto.AuthRequest;
 import org.example.newsfeed.domain.auth.dto.AuthResponse;
 import org.example.newsfeed.domain.user.entity.User;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
     @Transactional
@@ -23,10 +25,12 @@ public class AuthService {
            throw new IllegalArgumentException("이미 가입된 이메일 입니다");
        }
 
-       //회원가입 가능한 이메일
-        //필요한 경우 passwordEncoder를 사용해서 비밀번호 암호화
-        User user = new User(request.getEmail(), request.getPassword());
-       User saveUser = userRepository.save(user);
+       //비밀번호 암호화
+       String encoderPassword = passwordEncoder.encode(request.getPassword());
+       User user = new User(request.getEmail(), encoderPassword);
+
+        //유저 저장
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
@@ -34,8 +38,9 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
                 ()-> new IllegalArgumentException("존재하지 않는 회원입니다")
         );
-        String password = request.getPassword();
-        if (password.equals(user.getPassword())) {
+
+        //비밀번호 검증
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 잘못되었습니다");
         }
 
