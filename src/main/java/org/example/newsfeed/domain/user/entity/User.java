@@ -16,7 +16,11 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    public User(String email) {
+    @Column(unique = true, nullable = false)
+    private String password;
+
+    public User(String email, String password) {
         this.email = email;
+        this.password = password;
     }
 }
