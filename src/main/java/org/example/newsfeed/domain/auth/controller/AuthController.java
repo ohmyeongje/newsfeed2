@@ -1,5 +1,6 @@
 package org.example.newsfeed.domain.auth.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.newsfeed.domain.auth.dto.AuthRequest;
 import org.example.newsfeed.domain.auth.dto.AuthResponse;
