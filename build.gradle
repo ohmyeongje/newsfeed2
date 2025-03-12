@@ -24,6 +24,10 @@ repositories {
 }
 
 dependencies {
+
+    // Validation 관련 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     //비밀번호
     implementation 'at.favre.lib:bcrypt:0.10.2'
 
