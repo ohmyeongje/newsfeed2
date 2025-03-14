@@ -27,6 +27,6 @@ public class AuthController {
     public ResponseEntity<AuthResponse> signIn(
             @RequestBody AuthRequest request
     ) {
-       return ResponseEntity.ok(authService.signIn(request));
+       return ResponseEntity.ok(authService.signin(request));
     }
 }
