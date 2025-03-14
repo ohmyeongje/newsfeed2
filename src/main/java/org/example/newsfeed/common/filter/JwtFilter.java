@@ -52,6 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 httprequest.setAttribute("userId", Long.parseLong(claims.getSubject()));
                 httprequest.setAttribute("email", claims.get("email"));
+                httprequest.setAttribute("name", claims.get("name"));
 
 
 
