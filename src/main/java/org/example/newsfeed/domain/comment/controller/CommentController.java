@@ -46,4 +46,25 @@ public class CommentController {
        commentService.delete(authUser.getId(), commentId);
        return ResponseEntity.noContent().build();
    }
+
+   //댓글 좋아요
+    @PostMapping("/{commentId}/like")
+    public ResponseEntity<Integer> likeComment(@PathVariable Long commentId) {
+        int likesCount = commentService.likeComment(commentId);
+        return ResponseEntity.ok(likesCount);
+    }
+
+    //댓글 좋아요 취소
+    @DeleteMapping("/{commentId}/like")
+    public ResponseEntity<Integer> unlikeComment(@PathVariable Long commentId) {
+       int likesCount = commentService.unlikeCount(commentId);
+       return ResponseEntity.ok(likesCount);
+    }
+
+    //좋아요 개수 조회
+    @GetMapping("/{commentId}/like")
+    public ResponseEntity<Integer> getLikeCount(@PathVariable Long commentId) {
+       int likesCount = commentService.getLikeCount(commentId);
+       return ResponseEntity.ok(likesCount);
+    }
 }
