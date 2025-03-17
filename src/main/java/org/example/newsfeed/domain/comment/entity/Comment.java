@@ -31,6 +31,8 @@ public class Comment extends BaseEntity {
     @Lob
     private String content;
 
+    private int likeCount = 0;
+
     @Builder
     public Comment(Feed feed, User user, String content) {
         this.feed = feed;
@@ -40,5 +42,15 @@ public class Comment extends BaseEntity {
 
     public void update(String content) {
         this.content = content;
+    }
+
+    public void like() {
+        this.likeCount++;
+    }
+
+    public void unlike() {
+        if (this.likeCount > 0) {
+            this.likeCount--;
+        }
     }
 }
