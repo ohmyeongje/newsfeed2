@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.newsfeed.common.encoder.PasswordEncoder;
 import org.example.newsfeed.domain.auth.dto.AuthUser;
 import org.example.newsfeed.domain.user.dto.UserRequest;
+import org.example.newsfeed.domain.user.dto.UserResponse;
 import org.example.newsfeed.domain.user.dto.UserUpdatePasswordRequest;
 import org.example.newsfeed.domain.user.dto.UserUpdateResponse;
 import org.example.newsfeed.domain.user.entity.User;
@@ -47,9 +48,12 @@ public class UserService {
         return new UserUpdateResponse(user.getId(),
                 user.getEmail(),
                 user.getName(),
+                user.getFollowUser(),
+                user.getFollowingUser(),
                 user.getUpdatedAt()
         );
     }
+
     @Transactional
     public void updatePassword(AuthUser authUser, UserUpdatePasswordRequest request) {
         // 유저 조회
@@ -75,5 +79,16 @@ public class UserService {
         // 새 비밀번호 암호화 후 저장
         user.updatePassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse findUser(Long id, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."));
+
+        if (!id.equals(user.getId())) {
+            return new UserResponse(user.getId(), user.getName(), user.getFollowUser(), user.getFollowingUser());
+        }
+        return new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getFollowUser(), user.getFollowingUser());
     }
 }
