@@ -24,6 +24,12 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private int followUser;
+
+    @Column(nullable = false)
+    private int followingUser;
+
     public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
@@ -36,5 +42,21 @@ public class User extends BaseEntity {
     }
     public void updatePassword(String newPassword) {
         this.password = newPassword;
+    }
+
+    public void increaseFollower() {
+        followUser++;
+    }
+
+    public void increaseFollowing() {
+        followingUser++;
+    }
+
+    public void decreaseFollower() {
+        followUser--;
+    }
+
+    public void decreaseFollowing() {
+        followingUser--;
     }
 }
