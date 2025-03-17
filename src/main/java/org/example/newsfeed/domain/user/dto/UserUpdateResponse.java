@@ -12,6 +12,8 @@ public class UserUpdateResponse {
     private final Long id;
     private final String email;
     private final String name;
+    private final int followerUser;
+    private final int followingUser;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime updatedAt;
