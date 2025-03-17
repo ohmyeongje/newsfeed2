@@ -1,5 +1,6 @@
 package org.example.newsfeed.domain.comment.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.newsfeed.domain.comment.dto.CommentRequest;
@@ -58,5 +59,30 @@ public class CommentService {
         }
 
         commentRepository.delete(comment);
+    }
+
+    @Transactional
+    public int likeComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다"));
+        comment.like();
+        commentRepository.save(comment);
+        return comment.getLikeCount();
+    }
+
+    @Transactional
+    public int unlikeCount(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다"));
+        comment.unlike();
+        commentRepository.save(comment);
+        return comment.getLikeCount();
+    }
+
+    @Transactional(readOnly = true)
+    public int getLikeCount(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다"));
+        return comment.getLikeCount();
     }
 }
