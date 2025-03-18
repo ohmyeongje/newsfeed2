@@ -23,4 +23,9 @@ public class FeedResponse {
         this.createdAt = feed.getCreatedAt();
         this.updatedAt = feed.getUpdatedAt();
     }
+
+    // fromEntity 메서드 추가
+    public static FeedResponse fromEntity(Feed feed) {
+        return new FeedResponse(feed);
+    }
 }
