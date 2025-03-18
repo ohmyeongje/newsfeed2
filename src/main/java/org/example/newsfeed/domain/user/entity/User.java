@@ -1,6 +1,7 @@
 package org.example.newsfeed.domain.user.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.newsfeed.common.BaseEntity;
@@ -8,6 +9,7 @@ import org.example.newsfeed.common.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity {
 
