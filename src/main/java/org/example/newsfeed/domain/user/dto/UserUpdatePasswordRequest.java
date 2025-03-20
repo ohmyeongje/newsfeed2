@@ -2,11 +2,15 @@ package org.example.newsfeed.domain.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserUpdatePasswordRequest {
 
     @NotBlank(message = "현재 비밀번호를 입력해주세요")
