@@ -22,7 +22,7 @@ public class UserController {
     @PutMapping
     public void update(
             @Auth AuthUser authUser,
-            @PathVariable Long userId,
+            @PathVariable("userId") Long userId,
             @RequestBody UserRequest request
     ) {
         userService.update(authUser, userId, request);
@@ -30,8 +30,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserResponse> findUser(
-            @Auth AuthUser authUser,
-            @PathVariable Long userId)
+            @RequestAttribute(name = "authUser") AuthUser authUser,
+            @PathVariable("userId") Long userId)
     {
        return ResponseEntity.ok(userService.findUser(authUser.getId(), userId));
     }
