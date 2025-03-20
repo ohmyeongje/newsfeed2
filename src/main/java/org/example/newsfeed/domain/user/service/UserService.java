@@ -76,8 +76,13 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "기존 비밀번호와 동일한 비밀번호로 변경할 수 없습니다.");
         }
 
-        // 새 비밀번호 암호화 후 저장
-        user.updatePassword(passwordEncoder.encode(request.getNewPassword()));
+        // 새 비밀번호 암호화
+        String encodedNewPassword = passwordEncoder.encode(request.getNewPassword());
+
+        // 비밀번호 변경
+        user.updatePassword(encodedNewPassword);
+
+        // 변경된 사용자 정보 저장
         userRepository.save(user);
     }
 
